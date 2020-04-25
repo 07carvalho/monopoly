@@ -3,11 +3,11 @@ import random
 
 class Player:
     """This class represents a Monopoly player"""
-    def __init__(self, number, balance, position, houses):
+    def __init__(self, number, balance, position, properties):
         self.number = number
         self._balance = balance
         self._position = position
-        self._houses = houses
+        self._properties = properties
 
     @property
     def balance(self):
@@ -30,14 +30,14 @@ class Player:
         self._position = position
 
     @property
-    def houses(self):
-        """get player's houses"""
-        return self._houses
+    def properties(self):
+        """get player's properties"""
+        return self._properties
 
-    @houses.setter
-    def houses(self, house):
+    @properties.setter
+    def properties(self, house):
         """set a new house"""
-        self._houses.append(house)
+        self._properties.append(house)
 
     def is_playing(self):
         """check if is playing (balance higher or equal than 0)"""

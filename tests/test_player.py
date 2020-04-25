@@ -4,7 +4,6 @@ from src.player import Player
 
 class TestPlayer(unittest.TestCase):
 	"""Testing Player class"""
-	# def __init__(self):
 
 	def test_increase_balance(self):
 		"""Verify balance"""
