@@ -72,6 +72,34 @@ class Player:
         """generate a random number as a dice"""
         return random.randint(1, 6)
 
-    def walk(self, dice_number):
+    # def walk(self, dice_number):
+    #     """go to a new position according to a dice number"""
+    #     self.position = self.position + dice_number
+
+    def walk(self, board, dice_number):
         """go to a new position according to a dice number"""
-        self.position = self.position + dice_number
+        new_position = self.position + dice_number
+        if new_position > board.total_properties:
+            self.position = dice_number - (board.total_properties - self.position)
+            self.actual_round = self.actual_round + 1
+            self.balance = board._prize_for_completing_round
+
+            if self.actual_round > board.actual_round:
+                board.actual_round = self.actual_round
+
+            print('Player {0} is in the round {1} with balance {2}'.format(
+                        self.number, self.actual_round, self.balance))
+        else:
+            self.position = new_position
+        return self.position
+
+    def buy_property(self, prop):
+        """buy a property"""
+        self.balance = -prop.sale_price
+        prop.owner = self
+
+    def pay_rent_to_owner(self, prop):
+        """player pays rent to the property owner"""
+        rental_price = prop.rental_price
+        self.balance = -rental_price
+        prop.owner.balance = rental_price

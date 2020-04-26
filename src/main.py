@@ -21,25 +21,28 @@ def start_game():
     board.set_players()
     board.set_properties()
 
-
     players = board.players
-    print(players)
 
     while (board.actual_round < board.max_rounds):
         for player in players:
             if board.game_still_running():
                 # player rolls dice
-                num = player.roll_the_dice()
+                dice_number = player.roll_the_dice()
                 # move to property
-                board.move_player(player, num)
-                print(player.position)
+                new_position = player.walk(board, dice_number)
+                prop = board.get_property_by_position(new_position)
+                
+                # verify if property has owner
+                if prop.has_owner():
+                    # if has owner, pay rent
+                    player.pay_rent_to_owner(prop)
+                else:
+                    # if not decides if buy
+                    player.buy_property(prop)
+                
+                # verify if player is failed
 
-    # verify if property has owner
-    # if has owner, pay rent
-    #     get cash from player
-    #     verify if player is failed
-    #     put cash in owner property balance
-    # if not decides if buy
+
 
 
 

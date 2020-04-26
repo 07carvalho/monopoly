@@ -83,7 +83,6 @@ class Board:
         for i in range(1, self._total_properties + 1):
             self.properties.append(Property(i, sale_price, rental_price, first_owner))
 
-
     def set_players(self):
         initial_position = 0
         initial_round = 1
@@ -93,23 +92,9 @@ class Board:
             self.players.append(Player(i, self._initial_balance_per_player,
                                   initial_position, initial_round, initial_properties))
 
-    def move_player(self, player, dice_number):
-        """move player to a new position as the dice number"""
-        new_position = player.position + dice_number
-        if new_position > self._total_properties:
-            player.position = dice_number - (self._total_properties - player.position)
-            player.actual_round = player.actual_round + 1
-            player.balance = self._prize_for_completing_round
-
-            if player.actual_round > self.actual_round:
-                self.actual_round = player.actual_round
-
-            print('Player {0} is in the round {1} with balance {2}'.format(
-                        player.number, player.actual_round, player.balance))
-        else:
-            player.position = new_position
-
     def game_still_running(self):
         return self._actual_round < self._max_rounds
 
-        
+    def get_property_by_position(self, position):
+        """return the property according to the position in properties list"""
+        return self.properties[position-1]
