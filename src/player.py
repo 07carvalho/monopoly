@@ -3,16 +3,17 @@ import random
 
 class Player:
     """This class represents a Monopoly player"""
-    def __init__(self, number, balance, position, actual_round, properties):
+    def __init__(self, number, balance, position, actual_round, properties, strategy, is_playing=True):
         self._number = number
         self._balance = balance
         self._position = position
         self._actual_round = actual_round
         self._properties = properties
+        self._strategy = strategy
+        self._is_playing = is_playing
 
     def __str__(self):
         return self._number
-
 
     @property
     def number(self):
@@ -60,21 +61,26 @@ class Player:
         return self._properties
 
     @properties.setter
-    def properties(self, house):
+    def properties(self, prop):
         """set a new house to properties list"""
-        self._properties.append(house)
+        self._properties.append(prop)
 
+    @property
     def is_playing(self):
-        """check if is playing (balance higher or equal than 0)"""
-        return self.balance >= 0
+        """get playting status"""
+        return self._is_playing
+
+    @is_playing.setter
+    def is_playing(self, status):
+        """set is playting status"""
+        self._is_playing = status
 
     def roll_the_dice(self):
         """generate a random number as a dice"""
-        return random.randint(1, 6)
-
-    # def walk(self, dice_number):
-    #     """go to a new position according to a dice number"""
-    #     self.position = self.position + dice_number
+        dice_number = random.randint(1, 6)
+        print('Player {0} rolled the dice and get {1}'.format(
+                    self.number, dice_number))
+        return dice_number
 
     def walk(self, board, dice_number):
         """go to a new position according to a dice number"""
@@ -93,13 +99,38 @@ class Player:
             self.position = new_position
         return self.position
 
+    def has_cash_to_operation(self, value):
+        return (self.balance - value) >= 0
+
     def buy_property(self, prop):
-        """buy a property"""
-        self.balance = -prop.sale_price
-        prop.owner = self
+        """buy a property if has cash"""
+        if self.has_cash_to_operation(prop.sale_price):
+            self.balance = -prop.sale_price
+            prop.owner = self
+            print('Player {0} bought the Property {1} and now has {2}'.format(
+                        self.number, prop.position, self.balance))
+            self.properties.append(prop)
+            return True
+        return False
+
 
     def pay_rent_to_owner(self, prop):
         """player pays rent to the property owner"""
-        rental_price = prop.rental_price
-        self.balance = -rental_price
-        prop.owner.balance = rental_price
+        if self.has_cash_to_operation(prop.sale_price):
+            rental_price = prop.rental_price
+            self.balance = rental_price*(-1)
+            prop.owner.balance = rental_price
+            print('Player {0} paid {1} for rent to Player {2} and now has {3}'.format(
+                        self.number, rental_price, prop.owner.number, self.balance))
+            return True
+        return False
+
+
+    def loose_all(self):
+        """verify player balance and if """
+        # if not self.is_playing():
+        for prop in self._properties:
+            prop.owner = None
+        self._properties = []
+        self._is_playing = False
+        print('Player {0} is out of cash and out of game!'.format(self.number))

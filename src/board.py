@@ -76,8 +76,8 @@ class Board:
         self._actual_round = actual_round
 
     def set_properties(self):
-        sale_price = 200
-        rental_price = 60
+        sale_price = 150
+        rental_price = 50
         first_owner = None
 
         for i in range(1, self._total_properties + 1):
@@ -87,10 +87,11 @@ class Board:
         initial_position = 0
         initial_round = 1
         initial_properties = []
+        strategies = ['IMPULSIVO', 'EXIGENTE', 'CAUTELOSO', 'ALEATÓRIO']
 
         for i in range(1, self._total_players + 1):
             self.players.append(Player(i, self._initial_balance_per_player,
-                                  initial_position, initial_round, initial_properties))
+                                  initial_position, initial_round, initial_properties, strategies[i-1]))
 
     def game_still_running(self):
         return self._actual_round < self._max_rounds
@@ -98,3 +99,16 @@ class Board:
     def get_property_by_position(self, position):
         """return the property according to the position in properties list"""
         return self.properties[position-1]
+
+    def at_least_two_playing(self):
+        count = 0
+        for player in self.players:
+            if player.is_playing:
+                count += 1
+        return count >= 2
+
+    def declare_winner(self):
+        for player in self.players:
+            if player.is_playing:
+                print('Player {0} won the game and have {1}'.format(
+                        player.number, player.balance))
