@@ -57,12 +57,13 @@ if __name__ == '__main__':
     simulations_qty = 300
     
     for game in range(simulations_qty):
-        print('Starting Simulation {}'.format(game))
+        print('Starting Simulation {}'.format(game+1))
         winner, final_round = start_game()
         simulation.winner = winner
         simulation.round_per_game = final_round
 
-    print('\n\n\n\n\nResumo:')
+    print('\n\nTodas as simulacoes foram finalizadas!')
+    print('\n\nResumo:')
 
     time_out_qty = simulation.count_round_per_game(1000)
     print('{0} partidas terminam por time out (1000 rodadas).'.format(time_out_qty))

@@ -1,6 +1,7 @@
 from src.player import Player
 from src.property import Property
 
+
 class CautiousPlayer(Player):
 
     strategy = 'Cauteloso'
