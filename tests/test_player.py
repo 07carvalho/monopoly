@@ -3,29 +3,22 @@ from src.player import Player
 
 
 class TestPlayer(unittest.TestCase):
-	"""Testing Player class"""
+    """Testing Player class"""
 
-	def test_increase_balance(self):
-		"""Verify balance"""
-		self.p1 = Player(1, 300, 0, 1, [])
-		self.p1.balance = 40
-		self.assertEqual(self.p1.balance, 340)
-
-
-	def test_decrease_balance(self):
-		"""Verify balance"""
-		self.p1 = Player(1, 300, 0, 1, [])
-		self.p1.balance = -100
-		self.assertEqual(self.p1.balance, 200)
+    def test_increase_balance(self):
+        """Verify balance"""
+        p1 = Player(1, 300, 0, 1)
+        p1.balance = 40
+        self.assertEqual(p1.balance, 340)
 
 
-	def test_roll_dice_and_walk(self):
-		"""Verify walk"""
-		self.p1 = Player(1, 300, 0, 1, [])
-		dice_number = self.p1.roll_the_dice()
-		self.p1.walk(dice_number)
-		self.assertEqual(self.p1.position, dice_number)
+    def test_decrease_balance(self):
+        """Verify balance"""
+        p1 = Player(1, 300, 0, 1)
+        p1.balance = -100
+        self.assertEqual(p1.balance, 200)
 
 
 if __name__ == '__main__':
     unittest.main()
+    

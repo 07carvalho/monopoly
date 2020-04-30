@@ -1,13 +1,12 @@
-from board import Board
-from player import Player
-from property import Property
+from src.board import Board
+
 
 def start_game():
     total_players = 4
     initial_balance_per_player = 300
     total_properties = 20
     prize_for_completing_round = 100
-    max_rounds = 10
+    max_rounds = 1000
     actual_round = 1
 
 
@@ -34,18 +33,17 @@ def start_game():
                 prop = board.get_property_by_position(new_position)
                 
                 # verify if player own property
-                if prop not in player.properties:
+                if prop.owner is not player:
                     operation_ok = False
-                    if prop.has_owner():
-                        # if has another owner, pay rent
-                        operation_ok = player.pay_rent_to_owner(prop)
-                    else:
+                    if prop.owner is None:
                         # if not, decides if buy
                         operation_ok = player.buy_property(prop)
-                
+                        # if has another owner, pay rent
+                    else:
+                        operation_ok = player.pay_rent_to_owner(prop)
+
                     if not operation_ok:
-                        # verify if player is failed
-                        player.loose_all()
+                        board.remove_player_properties(player)
 
                     if not board.at_least_two_playing():
                         break

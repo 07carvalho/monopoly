@@ -7,6 +7,9 @@ class Property:
         self._rental_price = rental_price
         self._owner = owner
 
+    def __str__(self):
+        return str(self._position)
+
     @property
     def position(self):
         """get position"""

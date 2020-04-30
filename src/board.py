@@ -1,5 +1,9 @@
-from player import Player
-from property import Property
+import random
+from src.cautious_player import CautiousPlayer
+from src.exigent_player import ExigentPlayer
+from src.impulsive_player import ImpulsivePlayer
+from src.random_player import RandomPlayer
+from src.property import Property
 
 
 class Board:
@@ -71,29 +75,35 @@ class Board:
         return self._actual_round
 
     @actual_round.setter
-    def actual_round(self, actual_round):
+    def actual_round(self, num):
         """set actual_round"""
-        self._actual_round = actual_round
+        if num > self._actual_round:
+            self._actual_round = num
 
     def set_properties(self):
-        sale_price = 150
-        rental_price = 50
+        """set all the properties of the board"""
+
+        # setting low prices as the inicial balance of each player
+        sale_price = random.choice(range(60, 120))
+        rental_price = random.choice(range(10, 60))
         first_owner = None
 
         for i in range(1, self._total_properties + 1):
             self.properties.append(Property(i, sale_price, rental_price, first_owner))
 
     def set_players(self):
+        """setting all players"""
         initial_position = 0
         initial_round = 1
-        initial_properties = []
-        strategies = ['IMPULSIVO', 'EXIGENTE', 'CAUTELOSO', 'ALEATÓRIO']
+        players = [ImpulsivePlayer, ExigentPlayer, CautiousPlayer, RandomPlayer]
 
         for i in range(1, self._total_players + 1):
-            self.players.append(Player(i, self._initial_balance_per_player,
-                                  initial_position, initial_round, initial_properties, strategies[i-1]))
+            player = players[i-1]
+            self.players.append(player(i, self._initial_balance_per_player,
+                                  initial_position, initial_round))
 
     def game_still_running(self):
+        """verify if max rounds number was not reached"""
         return self._actual_round < self._max_rounds
 
     def get_property_by_position(self, position):
@@ -108,7 +118,23 @@ class Board:
         return count >= 2
 
     def declare_winner(self):
+        """
+        Declare who won the game
+        - The tiebreaker criterion is the players' turn order in this match.
+        - So, in the end, the first element in Players List that still playing
+          is the winner
+        """
         for player in self.players:
             if player.is_playing:
-                print('Player {0} won the game and have {1}'.format(
-                        player.number, player.balance))
+                print('Player {0} won the game in the round number {1}'.format(
+                        player.number, self.actual_round))
+                break
+
+    def remove_player_properties(self, player):
+        """remove all propertiest"""
+        for prop in self.properties:
+            if prop.owner is player:
+                prop.owner = None
+
+        player.is_playing = False
+        print('!!! Player {0} is out of cash and out of game !!!'.format(player.number))
