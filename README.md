@@ -19,3 +19,8 @@ To run the tests:
 python3.6 -m unittest discover
 ```
 
+## Suggestions to future work
+
+* Find the best prices for sale and rent property
+* Use threads to reduce the running time
+* Improve tests

@@ -1,7 +1,7 @@
 
 class Property:
 
-    def __init__(self, position, sale_price, rental_price, owner):
+    def __init__(self, position: int, sale_price: int, rental_price: int, owner):
         self._position = position
         self._sale_price = sale_price
         self._rental_price = rental_price
@@ -11,32 +11,32 @@ class Property:
         return str(self._position)
 
     @property
-    def position(self):
+    def position(self) -> int:
         """get position"""
         return self._position
 
     @position.setter
-    def position(self, position):
+    def position(self, position: int):
         """set position"""
         self._position = position
 
     @property
-    def sale_price(self):
+    def sale_price(self) -> int:
         """get sale price"""
         return self._sale_price
 
     @sale_price.setter
-    def sale_price(self, sale_price):
+    def sale_price(self, sale_price: int):
         """set sale price"""
         self._sale_price = sale_price
 
     @property
-    def rental_price(self):
+    def rental_price(self) -> int:
         """get rental price"""
         return self._rental_price
 
     @rental_price.setter
-    def rental_price(self, rental_price):
+    def rental_price(self, rental_price: int):
         """set rental price"""
         self._rental_price = rental_price
 
@@ -50,5 +50,5 @@ class Property:
         """set owner"""
         self._owner = owner
 
-    def has_owner(self):
+    def has_owner(self) -> bool:
         return self.owner is not None

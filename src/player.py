@@ -1,9 +1,10 @@
 import random
+from src.property import Property
 
 
 class Player:
     """This class represents a Monopoly player"""
-    def __init__(self, number, balance, position, actual_round, is_playing=True):
+    def __init__(self, number: int, balance: int, position: int, actual_round: int, is_playing=True):
         self._number = number
         self._balance = balance
         self._position = position
@@ -14,63 +15,63 @@ class Player:
         return str(self._number)
 
     @property
-    def number(self):
+    def number(self) -> int:
         """get number"""
         return self._number
 
     @number.setter
-    def number(self, number):
+    def number(self, number: int):
         """set number"""
         self._number = number
 
     @property
-    def balance(self):
+    def balance(self) -> int:
         """get balance"""
         return self._balance
 
     @balance.setter
-    def balance(self, cash):
+    def balance(self, cash: int):
         """set balance"""
         self._balance = self._balance + cash
 
     @property
-    def position(self):
+    def position(self) -> int:
         """get position"""
         return self._position
 
     @position.setter
-    def position(self, position):
+    def position(self, position: int):
         """set position"""
         self._position = position
 
     @property
-    def actual_round(self):
+    def actual_round(self) -> int:
         """get player's actual round"""
         return self._actual_round
 
     @actual_round.setter
-    def actual_round(self, actual_round):
+    def actual_round(self, actual_round: int):
         """set actual round"""
         self._actual_round = actual_round
 
     @property
-    def is_playing(self):
+    def is_playing(self) -> bool:
         """get playting status"""
         return self._is_playing
 
     @is_playing.setter
-    def is_playing(self, status):
+    def is_playing(self, status: bool):
         """set is playting status"""
         self._is_playing = status
 
-    def roll_the_dice(self):
+    def roll_the_dice(self) -> int:
         """generate a random number as a dice"""
         dice_number = random.randint(1, 6)
         # print('Player {0} rolled the dice and get {1}'.format(
         #             self.number, dice_number))
         return dice_number
 
-    def walk(self, board, dice_number):
+    def walk(self, board, dice_number: int) -> int:
         """go to a new position according to a dice number"""
         new_position = self.position + dice_number
         if new_position > board.total_properties:
@@ -87,11 +88,11 @@ class Player:
             self.position = new_position
         return self.position
 
-    def has_cash_to_operation(self, value):
+    def has_cash_to_operation(self, value: int):
         """verify if player has cash enought to pay"""
         return (self.balance - value) >= 0
 
-    def buy_property(self, prop):
+    def buy_property(self, prop: Property) -> bool:
         """buy a property if has cash"""
         if self.has_cash_to_operation(prop.sale_price):
             self.balance = -prop.sale_price
@@ -101,7 +102,7 @@ class Player:
             return True
         return False
 
-    def pay_rent_to_owner(self, prop):
+    def pay_rent_to_owner(self, prop: Property) -> bool:
         """player pays rent to the property owner"""
         if self.has_cash_to_operation(prop.sale_price):
             rental_price = prop.rental_price

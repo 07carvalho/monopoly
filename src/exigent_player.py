@@ -1,10 +1,12 @@
 from src.player import Player
+from src.property import Property
+
 
 class ExigentPlayer(Player):
 
     strategy = 'Exigente'
 
-    def buy_property(self, prop):
+    def buy_property(self, prop: Property) -> bool:
         """player buys a house according to his strategy"""
         if self.has_cash_to_operation(prop.sale_price):
             if prop.rental_price > 50:

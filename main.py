@@ -54,7 +54,7 @@ def start_game():
 
 if __name__ == '__main__':
     simulation = Simulation()
-    simulations_qty = 1000
+    simulations_qty = 300
     
     for game in range(simulations_qty):
         print('Starting Simulation {}'.format(game))
