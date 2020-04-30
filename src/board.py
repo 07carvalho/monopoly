@@ -111,11 +111,21 @@ class Board:
         return self.properties[position-1]
 
     def at_least_two_playing(self):
+        """verify if at least two players still playing"""
         count = 0
         for player in self.players:
             if player.is_playing:
                 count += 1
         return count >= 2
+
+    def remove_player_properties(self, player):
+        """remove all propertiest"""
+        for prop in self.properties:
+            if prop.owner is player:
+                prop.owner = None
+
+        player.is_playing = False
+        # print('!!! Player {0} is out of cash and out of game !!!'.format(player.number))
 
     def declare_winner(self):
         """
@@ -126,15 +136,6 @@ class Board:
         """
         for player in self.players:
             if player.is_playing:
-                print('Player {0} won the game in the round number {1}'.format(
-                        player.number, self.actual_round))
-                break
-
-    def remove_player_properties(self, player):
-        """remove all propertiest"""
-        for prop in self.properties:
-            if prop.owner is player:
-                prop.owner = None
-
-        player.is_playing = False
-        print('!!! Player {0} is out of cash and out of game !!!'.format(player.number))
+                # print('Player {0} won the game in the round number {1}'.format(
+                #         player.strategy, self.actual_round))
+                return player.strategy, self.actual_round

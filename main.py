@@ -1,4 +1,5 @@
 from src.board import Board
+from src.simulation import Simulation
 
 
 def start_game():
@@ -8,7 +9,6 @@ def start_game():
     prize_for_completing_round = 100
     max_rounds = 1000
     actual_round = 1
-
 
     # initializing
     board = Board(total_players,
@@ -36,10 +36,10 @@ def start_game():
                 if prop.owner is not player:
                     operation_ok = False
                     if prop.owner is None:
-                        # if not, decides if buy
+                        # if no owner, decides if buy property
                         operation_ok = player.buy_property(prop)
-                        # if has another owner, pay rent
                     else:
+                        # if has another owner, pay rent
                         operation_ok = player.pay_rent_to_owner(prop)
 
                     if not operation_ok:
@@ -49,8 +49,31 @@ def start_game():
                         break
 
 
-    print("end")
-    board.declare_winner()
+    # print("\nGame Over!")
+    return board.declare_winner()
 
 if __name__ == '__main__':
-    start_game()
+    simulation = Simulation()
+    simulations_qty = 1000
+    
+    for game in range(simulations_qty):
+        print('Starting Simulation {}'.format(game))
+        winner, final_round = start_game()
+        simulation.winner = winner
+        simulation.round_per_game = final_round
+
+    print('\n\n\n\n\nResumo:')
+
+    time_out_qty = simulation.count_round_per_game(1000)
+    print('{0} partidas terminam por time out (1000 rodadas).'.format(time_out_qty))
+
+    round_avg = simulation.round_avg()
+    print('Uma partida demora em media {:.1f} rodadas.'.format(round_avg))
+
+    print('Vitorias por jogador:')
+    victories_count_dict = simulation.count_victories_per_player()
+    for player, qty in victories_count_dict.items():
+        percentage = (qty*100)/simulations_qty
+        print('- O jogador {} venceu {:.1f}% das partidas.'.format(player, percentage))
+
+    print('O comportamento que mais vence eh o {}!'.format(next(iter(victories_count_dict))))

@@ -66,8 +66,8 @@ class Player:
     def roll_the_dice(self):
         """generate a random number as a dice"""
         dice_number = random.randint(1, 6)
-        print('Player {0} rolled the dice and get {1}'.format(
-                    self.number, dice_number))
+        # print('Player {0} rolled the dice and get {1}'.format(
+        #             self.number, dice_number))
         return dice_number
 
     def walk(self, board, dice_number):
@@ -81,8 +81,8 @@ class Player:
             self.balance = board._prize_for_completing_round
 
             self.position = dice_number - (board.total_properties - self.position)
-            print('+++ Player {0} is in the round {1} with balance {2} +++'.format(
-                        self.number, self.actual_round, self.balance))
+            # print('+++ Player {0} is in the round {1} with balance {2} +++'.format(
+            #             self.number, self.actual_round, self.balance))
         else:
             self.position = new_position
         return self.position
@@ -96,9 +96,8 @@ class Player:
         if self.has_cash_to_operation(prop.sale_price):
             self.balance = -prop.sale_price
             prop.owner = self
-            # self._properties.append(prop)
-            print('$$$ Player {0} bought the Property {1} and now has {2} $$$'.format(
-                        self.number, prop.position, self.balance))
+            # print('$$$ Player {0} bought the Property {1} and now has {2} $$$'.format(
+            #             self.number, prop.position, self.balance))
             return True
         return False
 
@@ -108,7 +107,7 @@ class Player:
             rental_price = prop.rental_price
             self.balance = rental_price*(-1)
             prop.owner.balance = rental_price
-            print('$$$ Player {0} paid {1} for rent to Player {2} and now has {3} $$$'.format(
-                        self.number, rental_price, prop.owner.number, self.balance))
+            # print('$$$ Player {0} paid {1} for rent to Player {2} and now has {3} $$$'.format(
+            #             self.number, rental_price, prop.owner.number, self.balance))
             return True
         return False
