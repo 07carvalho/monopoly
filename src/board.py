@@ -86,7 +86,7 @@ class Board:
     def set_properties(self):
         """set all the properties of the board"""
 
-        # setting low prices as the inicial balance of each player
+        # setting low prices as the initial balance of each player
         sale_price = random.choice(range(60, 120))
         rental_price = random.choice(range(10, 60))
         first_owner = None
@@ -101,9 +101,9 @@ class Board:
         players = [ImpulsivePlayer, ExigentPlayer, CautiousPlayer, RandomPlayer]
 
         for i in range(1, self._total_players + 1):
-            player = players[i-1]
+            player = players[i - 1]
             self.players.append(player(i, self._initial_balance_per_player,
-                                  initial_position, initial_round))
+                                       initial_position, initial_round))
 
     def game_still_running(self) -> bool:
         """verify if max rounds number was not reached"""
@@ -111,7 +111,7 @@ class Board:
 
     def get_property_by_position(self, position: int) -> Property:
         """return the property according to the position in properties list"""
-        return self.properties[position-1]
+        return self.properties[position - 1]
 
     def at_least_two_playing(self) -> bool:
         """verify if at least two players still playing"""
@@ -122,14 +122,14 @@ class Board:
         return count >= 2
 
     def remove_player_properties(self, player: Player):
-        """remove all propertiest"""
+        """remove all properties"""
         for prop in self.properties:
             if prop.owner is player:
                 prop.owner = None
 
         player.is_playing = False
         # print('!!! Player {0} is out of cash and out of game !!!'.format(player.number))
-    
+
     def declare_winner(self) -> Tuple[str, int]:
         """
         Declare who won the game

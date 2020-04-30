@@ -13,7 +13,6 @@ class TestBoard(unittest.TestCase):
         board.actual_round = 1
         self.assertEqual(board.actual_round, 2)
 
-
     def test_game_still_running(self):
         """Verify game still running"""
         board = Board(4, 300, 20, 100, 1000, 1)
@@ -25,4 +24,3 @@ class TestBoard(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    

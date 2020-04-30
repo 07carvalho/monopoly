@@ -11,7 +11,6 @@ class TestPlayer(unittest.TestCase):
         p1.balance = 40
         self.assertEqual(p1.balance, 340)
 
-
     def test_decrease_balance(self):
         """Verify balance"""
         p1 = Player(1, 300, 0, 1)

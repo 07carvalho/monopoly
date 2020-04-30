@@ -1,10 +1,10 @@
-from collections import Counter, OrderedDict
+from collections import Counter
 from statistics import mean
 
 
 class Simulation:
     """This class get data from the simulation"""
-    
+
     def __init__(self):
         self._round_per_game = []
         self._winner = []
@@ -37,9 +37,8 @@ class Simulation:
         """return a object with the number of victories per player"""
         winners_dict = dict(Counter(self.winner))
         return {strategy: value for strategy, value in sorted(winners_dict.items(),
-                                        key=lambda item: item[1], reverse=True)}
+                                                              key=lambda item: item[1], reverse=True)}
 
     def round_avg(self) -> float:
         """return the average of rounds"""
-        return mean(self.round_per_game) 
-
+        return mean(self.round_per_game)

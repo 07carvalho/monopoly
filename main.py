@@ -23,7 +23,7 @@ def start_game():
 
     players = board.players
 
-    while (board.game_still_running() and board.at_least_two_playing()):
+    while board.game_still_running() and board.at_least_two_playing():
         for player in players:
             if player.is_playing:
                 # player rolls dice
@@ -48,9 +48,9 @@ def start_game():
                     if not board.at_least_two_playing():
                         break
 
-
     # print("\nGame Over!")
     return board.declare_winner()
+
 
 if __name__ == '__main__':
     simulation = Simulation()

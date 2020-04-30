@@ -19,4 +19,3 @@ class CautiousPlayer(Player):
             #             self.number, prop.position))
             return True
         return False
-        

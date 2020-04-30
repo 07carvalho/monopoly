@@ -56,15 +56,16 @@ class Player:
 
     @property
     def is_playing(self) -> bool:
-        """get playting status"""
+        """get playing status"""
         return self._is_playing
 
     @is_playing.setter
     def is_playing(self, status: bool):
-        """set is playting status"""
+        """set is playing status"""
         self._is_playing = status
 
-    def roll_the_dice(self) -> int:
+    @staticmethod
+    def roll_the_dice() -> int:
         """generate a random number as a dice"""
         dice_number = random.randint(1, 6)
         # print('Player {0} rolled the dice and get {1}'.format(
@@ -79,7 +80,7 @@ class Player:
             self.actual_round = self.actual_round + 1
             board.actual_round = self.actual_round
             # receive prize
-            self.balance = board._prize_for_completing_round
+            self.balance = board.prize_for_completing_round
 
             self.position = dice_number - (board.total_properties - self.position)
             # print('+++ Player {0} is in the round {1} with balance {2} +++'.format(
@@ -89,7 +90,7 @@ class Player:
         return self.position
 
     def has_cash_to_operation(self, value: int):
-        """verify if player has cash enought to pay"""
+        """verify if player has cash enough to pay"""
         return (self.balance - value) >= 0
 
     def buy_property(self, prop: Property) -> bool:

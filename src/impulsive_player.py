@@ -15,4 +15,3 @@ class ImpulsivePlayer(Player):
             #             self.number, prop.position, self.balance))
             return True
         return False
-        

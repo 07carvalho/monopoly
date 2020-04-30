@@ -16,9 +16,9 @@ class Property:
         return self._position
 
     @position.setter
-    def position(self, position: int):
+    def position(self, num: int):
         """set position"""
-        self._position = position
+        self._position = num
 
     @property
     def sale_price(self) -> int:
@@ -36,9 +36,9 @@ class Property:
         return self._rental_price
 
     @rental_price.setter
-    def rental_price(self, rental_price: int):
+    def rental_price(self, value: int):
         """set rental price"""
-        self._rental_price = rental_price
+        self._rental_price = value
 
     @property
     def owner(self):
@@ -46,9 +46,9 @@ class Property:
         return self._owner
 
     @owner.setter
-    def owner(self, owner):
+    def owner(self, player):
         """set owner"""
-        self._owner = owner
+        self._owner = player
 
     def has_owner(self) -> bool:
         return self.owner is not None
